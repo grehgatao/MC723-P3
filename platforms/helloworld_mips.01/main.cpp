@@ -22,6 +22,7 @@ const char *archc_options="-abi -dy ";
 #include  <systemc.h>
 #include  "mips1.H"
 #include  "ac_tlm_mem.h"
+#include  "bar_mem.h"
 
 using user::ac_tlm_mem;
 

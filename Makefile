@@ -65,7 +65,7 @@ all:
 	for ip in $(IP); do echo Making IP $$ip ...; \
 	    cd ip/$$ip; $(MAKE) lib; cd $(ARP); done
 	for is in $(IS); do echo Making IS $$is ...; \
-            cd is/$$is; $(MAKE) lib; cd $(ARP); done
+        cd is/$$is; $(MAKE) lib; cd $(ARP); done
 	for wrapper in $(WRAPPER); do \
             echo Making Wrapper $$wrapper ...; \
             cd wrappers/$$wrapper; $(MAKE) lib; \
