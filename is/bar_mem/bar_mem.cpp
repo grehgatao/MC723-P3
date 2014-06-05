@@ -35,6 +35,8 @@
 // ArchC includes
 
 #include "bar_mem.h"
+#include  "ac_tlm_port.H"
+#include  "ac_memport.H"
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -42,42 +44,28 @@
 using user::bar_mem;
 
 /// Constructor
-bar_mem::ac_tlm_mem( sc_module_name module_name ) :
-  sc_module( module_name ),
-  target_export("iport")
+bar_mem::bar_mem( sc_module_name module_name) :
+DM_port("DM_port", 5242880U),
+target_export1("iport1"),
+target_export2("iport2"),
+target_export3("iport3"),
+target_export4("iport4"),
+target_export5("iport5"),
+target_export6("iport6"),
+target_export7("iport7"),
+target_export8("iport8")
 {
-    /// Binds target_export to the memory
-    target_export( *this );
+  /// Binds target_export to the memory
+  target_export1( *this );
+  target_export2( *this );
+  target_export3( *this );
+  target_export4( *this );
+  target_export5( *this );
+  target_export6( *this );
+  target_export7( *this );
+  target_export8( *this );
 }
 
 /// Destructor
-bar_mem::~ac_tlm_mem() {
+bar_mem::~bar_mem() {
 }
-
-/** Internal Write
-  * Note: Always write 32 bits
-  * @param a is the address to write
-  * @param d id the data being write
-  * @returns A TLM response packet with SUCCESS
-*/
-ac_tlm_rsp_status bar_mem::writem( const uint32_t &a , const uint32_t &d )
-{
-  //*((uint32_t *) &memory[a]) = *((uint32_t *) &d);
-  return SUCCESS;
-}
-
-/** Internal Read
-  * Note: Always read 32 bits
-  * @param a is the address to read
-  * @param d id the data that will be read
-  * @returns A TLM response packet with SUCCESS and a modified d
-*/
-ac_tlm_rsp_status bar_mem::readm( const uint32_t &a , uint32_t &d )
-{
-  //*((uint32_t *) &d) = *((uint32_t *) &memory[a]);
-
-  return SUCCESS;
-}
-
-
-

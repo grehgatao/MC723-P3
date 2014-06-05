@@ -32,12 +32,14 @@ int sc_main(int ac, char *av[])
   //!  ISA simulator
   mips1 mips1_proc1("mips1");
   ac_tlm_mem mem("mem");
+  user::bar_mem bar("bar_mem1");
+  bar.DM_port(mem.target_export);
 
 #ifdef AC_DEBUG
   ac_trace("mips1_proc1.trace");
 #endif 
 
-  mips1_proc1.DM_port(mem.target_export);
+  mips1_proc1.DM_port(bar.target_export1);
 
   mips1_proc1.init(ac, av);
   cerr << endl;
