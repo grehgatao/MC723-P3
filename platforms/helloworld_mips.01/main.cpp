@@ -24,6 +24,8 @@ const char *archc_options="-abi -dy ";
 #include  "ac_tlm_mem.h"
 #include  "bar_mem.h"
 
+#define AC_DEBUG 1
+
 using user::ac_tlm_mem;
 
 int sc_main(int ac, char *av[])
@@ -31,22 +33,64 @@ int sc_main(int ac, char *av[])
 
   //!  ISA simulator
   mips1 mips1_proc1("mips1");
+  mips1 mips1_proc2("mips2");
+  mips1 mips1_proc3("mips3");
+  mips1 mips1_proc4("mips4");
+  mips1 mips1_proc5("mips5");
+  mips1 mips1_proc6("mips6");
+  mips1 mips1_proc7("mips7");
+  mips1 mips1_proc8("mips8");
   ac_tlm_mem mem("mem");
   user::bar_mem bar("bar_mem1");
   bar.DM_port(mem.target_export);
 
 #ifdef AC_DEBUG
   ac_trace("mips1_proc1.trace");
-#endif 
+#endif
 
-  mips1_proc1.DM_port(bar.target_export1);
+  mips1_proc1.DM_port(bar.target_export2);
+  mips1_proc2.DM_port(bar.target_export1);
+  mips1_proc3.DM_port(bar.target_export3);
+  mips1_proc4.DM_port(bar.target_export4);
+  mips1_proc5.DM_port(bar.target_export5);
+  mips1_proc6.DM_port(bar.target_export6);
+  mips1_proc7.DM_port(bar.target_export7);
+  mips1_proc8.DM_port(bar.target_export8);
 
   mips1_proc1.init(ac, av);
+
+  mips1_proc2.load(av[1]);
+  mips1_proc2.init();
+
+  mips1_proc3.load(av[1]);
+  mips1_proc3.init();
+
+  mips1_proc4.load(av[1]);
+  mips1_proc4.init();
+
+  mips1_proc5.load(av[1]);
+  mips1_proc5.init();
+
+  mips1_proc6.load(av[1]);
+  mips1_proc6.init();
+
+  mips1_proc7.load(av[1]);
+  mips1_proc7.init();
+
+  mips1_proc8.load(av[1]);
+  mips1_proc8.init();
   cerr << endl;
 
   sc_start();
 
   mips1_proc1.PrintStat();
+  mips1_proc2.PrintStat();
+  mips1_proc3.PrintStat();
+  mips1_proc4.PrintStat();
+  mips1_proc5.PrintStat();
+  mips1_proc6.PrintStat();
+  mips1_proc7.PrintStat();
+  mips1_proc8.PrintStat();
   cerr << endl;
 
 #ifdef AC_STATS

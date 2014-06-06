@@ -22,3 +22,5 @@
 
 # Linux temp files
 *~
+*.a
+*.trace
