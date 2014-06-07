@@ -74,6 +74,9 @@ typedef ac_memport<mips1_parms::ac_word, mips1_parms::ac_Hword> ac_memory;
 #define AC_BEHAVIOR_sys_call() mips1_parms::mips1_isa::behavior_sys_call(unsigned int op, unsigned int rs, unsigned int rt, unsigned int rd, unsigned int shamt, unsigned int func)
 #define AC_BEHAVIOR_instr_break() mips1_parms::mips1_isa::behavior_instr_break(unsigned int op, unsigned int rs, unsigned int rt, unsigned int rd, unsigned int shamt, unsigned int func)
 
+#define AC_BEHAVIOR_ll() mips1_parms::mips1_isa::behavior_ll(unsigned int op, unsigned int rs, unsigned int rt, int imm)
+#define AC_BEHAVIOR_sc() mips1_parms::mips1_isa::behavior_sc(unsigned int op, unsigned int rs, unsigned int rt, int imm)
+
 
 #endif //_MIPS1_BHV_MACROS_H
 

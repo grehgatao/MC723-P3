@@ -74,6 +74,7 @@ void mips1::behavior() {
       if( ins_id == 0 ) {
         cerr << "ArchC Error: Unidentified instruction. " << endl;
         cerr << "PC = " << hex << decode_pc << dec << endl;
+        cerr << "Instruction: " << hex << DM.read(decode_pc) << endl;
         stop();
         return;
       }
@@ -315,9 +316,17 @@ void mips1::behavior() {
         if (!ac_annul_sig) ISA._behavior_mips1_Type_R(instr_vec->get(1), instr_vec->get(2), instr_vec->get(3), instr_vec->get(4), instr_vec->get(5), instr_vec->get(6));
         if (!ac_annul_sig) ISA.behavior_sys_call(instr_vec->get(1), instr_vec->get(2), instr_vec->get(3), instr_vec->get(4), instr_vec->get(5), instr_vec->get(6));
         break;
-      case 59: // Instruction instr_break
+      case 61: // Instruction instr_break
         if (!ac_annul_sig) ISA._behavior_mips1_Type_R(instr_vec->get(1), instr_vec->get(2), instr_vec->get(3), instr_vec->get(4), instr_vec->get(5), instr_vec->get(6));
         if (!ac_annul_sig) ISA.behavior_instr_break(instr_vec->get(1), instr_vec->get(2), instr_vec->get(3), instr_vec->get(4), instr_vec->get(5), instr_vec->get(6));
+        break;
+      case 59: // Instruction ll
+        if (!ac_annul_sig) ISA._behavior_mips1_Type_I(instr_vec->get(1), instr_vec->get(2), instr_vec->get(3), instr_vec->get(7));
+        if (!ac_annul_sig) ISA.behavior_ll(instr_vec->get(1), instr_vec->get(2), instr_vec->get(3), instr_vec->get(7));
+        break;
+      case 60: // Instruction sc
+        if (!ac_annul_sig) ISA._behavior_mips1_Type_I(instr_vec->get(1), instr_vec->get(2), instr_vec->get(3), instr_vec->get(7));
+        if (!ac_annul_sig) ISA.behavior_sc(instr_vec->get(1), instr_vec->get(2), instr_vec->get(3), instr_vec->get(7));
         break;
       } // switch (ins_id)
       break;

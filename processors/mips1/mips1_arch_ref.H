@@ -39,6 +39,11 @@ public:
   ac_reg<mips1_parms::ac_word>& hi;
   ac_reg<mips1_parms::ac_word>& lo;
 
+    //Registradores para execução de LL e SC
+  ac_reg<mips1_parms::ac_word>& LL;
+  ac_reg<mips1_parms::ac_word>& LLAddr;
+  ac_reg<mips1_parms::ac_word>& oldLL;
+
   //!Constructor.
    mips1_arch_ref(mips1_arch& arch);
 

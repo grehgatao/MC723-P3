@@ -136,6 +136,16 @@ void ac_behavior( lw )
   dbg_printf("Result = %#x\n", RB[rt]);
 };
 
+//!Instruction ll behavior method.
+void ac_behavior( ll )
+{
+  dbg_printf("ll r%d, %d(r%d)\n", rt, imm & 0xFFFF, rs);
+  RB[rt] = DM.read(RB[rs]+ imm);
+  LL = 1;
+  LLAddr = RB[rs]+ imm;
+  dbg_printf("Result = %#x\n", RB[rt]);
+};
+
 //!Instruction lwl behavior method.
 void ac_behavior( lwl )
 {
@@ -193,6 +203,23 @@ void ac_behavior( sw )
 {
   dbg_printf("sw r%d, %d(r%d)\n", rt, imm & 0xFFFF, rs);
   DM.write(RB[rs] + imm, RB[rt]);
+  dbg_printf("Result = %#x\n", RB[rt]);
+};
+
+//!Instruction sw behavior method.
+void ac_behavior( sc )
+{
+  dbg_printf("sc r%d, %d(r%d)\n", rt, imm & 0xFFFF, rs);
+  if (LL == 1)
+  {
+    DM.write(RB[rs] + imm, RB[rt]);
+    RB[rt] = 1;
+    LL = 0;
+  }
+  else
+  {
+    RB[rt] = 0;
+  }
   dbg_printf("Result = %#x\n", RB[rt]);
 };
 

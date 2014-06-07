@@ -133,7 +133,10 @@ ac_dec_list mips1_parms::mips1_isa::dec_list[mips1_parms::AC_DEC_LIST_NUMBER] = 
   {"op", 1, 0, &(mips1_parms::mips1_isa::dec_list[93])},
   {"func", 6, 12, NULL},
   {"op", 1, 0, &(mips1_parms::mips1_isa::dec_list[95])},
-  {"func", 6, 13, NULL}
+  {"func", 6, 13, NULL},
+
+  {"op", 1, 48, NULL},
+  {"op", 1, 56, NULL}
 };
 
 ac_dec_instr mips1_parms::mips1_isa::instructions[mips1_parms::AC_DEC_INSTR_NUMBER] = {
@@ -195,7 +198,12 @@ ac_dec_instr mips1_parms::mips1_isa::instructions[mips1_parms::AC_DEC_INSTR_NUMB
   {"bltzal", 4, "bltzal", "bltzal %reg, %exp(pcrel)", "Type_I", 56, 1, 1, 1, &(mips1_parms::mips1_isa::dec_list[88]), 0, &(mips1_parms::mips1_isa::instructions[56])},
   {"bgezal", 4, "bgezal", "bgezal %reg, %exp(pcrel)", "Type_I", 57, 1, 1, 1, &(mips1_parms::mips1_isa::dec_list[90]), 0, &(mips1_parms::mips1_isa::instructions[57])},
   {"sys_call", 4, "syscall", "syscall", "Type_R", 58, 1, 1, 1, &(mips1_parms::mips1_isa::dec_list[92]), 0, &(mips1_parms::mips1_isa::instructions[58])},
-  {"instr_break", 4, "break", "break", "Type_R", 59, 1, 1, 1, &(mips1_parms::mips1_isa::dec_list[94]), 0, NULL}
+
+  {"ll", 4, "ll", "ll %reg, \%lo(%exp)(%reg)", "Type_I", 59, 1, 1, 1, &(mips1_parms::mips1_isa::dec_list[96]), 0, &(mips1_parms::mips1_isa::instructions[59])},
+  {"sc", 4, "sc", "sc %reg, \%lo(%exp)(%reg)", "Type_I", 60, 1, 1, 1, &(mips1_parms::mips1_isa::dec_list[97]), 0, &(mips1_parms::mips1_isa::instructions[60])},
+
+  {"instr_break", 4, "break", "break", "Type_R", 61, 1, 1, 1, &(mips1_parms::mips1_isa::dec_list[94]), 0, NULL}
+
 };
 
 const ac_instr_info
@@ -259,5 +267,9 @@ mips1_parms::mips1_isa::instr_table[mips1_parms::AC_DEC_INSTR_NUMBER + 1] = {
   ac_instr_info(56, "bltzal", "bltzal", 4),
   ac_instr_info(57, "bgezal", "bgezal", 4),
   ac_instr_info(58, "sys_call", "syscall", 4),
-  ac_instr_info(59, "instr_break", "break", 4)
+  ac_instr_info(59, "ll", "ll", 4),
+  ac_instr_info(60, "sc", "sc", 4),
+  ac_instr_info(61, "instr_break", "break", 4)
+  
+  
 };

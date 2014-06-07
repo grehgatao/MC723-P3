@@ -124,6 +124,9 @@ public:
   void behavior_sys_call(unsigned int op, unsigned int rs, unsigned int rt, unsigned int rd, unsigned int shamt, unsigned int func);
   void behavior_instr_break(unsigned int op, unsigned int rs, unsigned int rt, unsigned int rd, unsigned int shamt, unsigned int func);
 
+  void behavior_sc(unsigned int op, unsigned int rs, unsigned int rt, int imm);
+  void behavior_ll(unsigned int op, unsigned int rs, unsigned int rt, int imm);
+
 };
 };
 

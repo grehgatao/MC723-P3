@@ -24,8 +24,6 @@ const char *archc_options="-abi -dy ";
 #include  "ac_tlm_mem.h"
 #include  "bar_mem.h"
 
-#define AC_DEBUG 1
-
 using user::ac_tlm_mem;
 
 int sc_main(int ac, char *av[])

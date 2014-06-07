@@ -23,7 +23,10 @@ mips1_arch::mips1_arch() :
   RB("RB"),
   npc("npc", 0),
   hi("hi", 0),
-  lo("lo", 0) {
+  lo("lo", 0),
+  LL("ll", 0),
+  LLAddr("lladr", 0),
+  oldLL("oldll", 0) {
 
   ac_mt_endian = mips1_parms::AC_MATCH_ENDIAN;
   ac_tgt_endian = mips1_parms::AC_PROC_ENDIAN;

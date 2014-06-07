@@ -43,6 +43,8 @@ AC_ARCH(mips1){
   ac_reg npc;
   ac_reg hi, lo;
 
+  ac_reg LL, LLAdr, oldLL;
+
   ac_wordsize 32;
 
   ARCH_CTOR(mips1) {
