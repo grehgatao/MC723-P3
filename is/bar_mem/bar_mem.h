@@ -62,7 +62,7 @@ class bar_mem :
   public ac_tlm_transport_if // Using ArchC TLM protocol
 {
 private:
-  bool write_lock;
+  volatile bool write_lock;
 public:
   /// Exposed port with ArchC interface
   sc_export< ac_tlm_transport_if > target_export1;
