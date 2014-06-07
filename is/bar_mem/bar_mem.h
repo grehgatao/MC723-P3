@@ -61,6 +61,8 @@ class bar_mem :
   public sc_module,
   public ac_tlm_transport_if // Using ArchC TLM protocol
 {
+private:
+  bool write_lock;
 public:
   /// Exposed port with ArchC interface
   sc_export< ac_tlm_transport_if > target_export1;
@@ -99,7 +101,10 @@ public:
     cout << "Transport WRITE at 0x" << hex << request.addr << " value ";
     cout << request.data << endl;
       #endif
+      while(write_lock);
+      write_lock = true;
       DM_port.write(&aux_req.data, request.addr, 32);
+      write_lock = false;
       response.status = SUCCESS;
       break;
     default :

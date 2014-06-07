@@ -57,28 +57,30 @@ int sc_main(int ac, char *av[])
   mips1_proc7.DM_port(bar.target_export7);
   mips1_proc8.DM_port(bar.target_export8);
 
+  char * program = av[1];
+
   mips1_proc1.init(ac, av);
 
-  mips1_proc2.load(av[1]);
-  mips1_proc2.init();
+  av[1] = program;
+  mips1_proc2.init(ac, av);
 
-  mips1_proc3.load(av[1]);
-  mips1_proc3.init();
+  av[1] = program;
+  mips1_proc3.init(ac, av);
 
-  mips1_proc4.load(av[1]);
-  mips1_proc4.init();
+  av[1] = program;
+  mips1_proc4.init(ac, av);
 
-  mips1_proc5.load(av[1]);
-  mips1_proc5.init();
+  av[1] = program;
+  mips1_proc5.init(ac, av);
 
-  mips1_proc6.load(av[1]);
-  mips1_proc6.init();
+  av[1] = program;
+  mips1_proc6.init(ac, av);
 
-  mips1_proc7.load(av[1]);
-  mips1_proc7.init();
+  av[1] = program;
+  mips1_proc7.init(ac, av);
 
-  mips1_proc8.load(av[1]);
-  mips1_proc8.init();
+  av[1] = program;
+  mips1_proc8.init(ac, av);
   cerr << endl;
 
   sc_start();

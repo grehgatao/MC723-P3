@@ -64,6 +64,7 @@ target_export8("iport8")
   target_export6( *this );
   target_export7( *this );
   target_export8( *this );
+  write_lock = false;
 }
 
 /// Destructor
