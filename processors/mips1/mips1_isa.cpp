@@ -143,6 +143,7 @@ void ac_behavior( ll )
   RB[rt] = DM.read(RB[rs]+ imm);
   LL = 1;
   LLAddr = RB[rs]+ imm;
+  oldLL = RB[rt];
   dbg_printf("Result = %#x\n", RB[rt]);
 };
 
@@ -210,16 +211,19 @@ void ac_behavior( sw )
 void ac_behavior( sc )
 {
   dbg_printf("sc r%d, %d(r%d)\n", rt, imm & 0xFFFF, rs);
+
+  //Processador deve checar se o valor mudou
+  unsigned int temp = DM.read(LLAddr);
+  if (temp != oldLL)
+  {
+    LL = 0;
+  }
+
   if (LL == 1)
   {
     DM.write(RB[rs] + imm, RB[rt]);
-    RB[rt] = 1;
-    LL = 0;
   }
-  else
-  {
-    RB[rt] = 0;
-  }
+  RB[rt] = LL;
   dbg_printf("Result = %#x\n", RB[rt]);
 };
 

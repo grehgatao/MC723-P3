@@ -7,7 +7,7 @@ atomic_t finish = {0};
 int main(int argc, char *argv[]){
 	int i;
 
-	for(i=0;i<10;i++)
+	for(i=0;i<10000;i++)
 	{
 		atomic_inc(&count);
 	}
@@ -21,4 +21,3 @@ int main(int argc, char *argv[]){
 
 	return 0; // Never executed, just for compatibility
 }
-
