@@ -14,6 +14,7 @@ int main(int argc, char *argv[]){
 
 	atomic_inc(&finish);
 
+	//Se
 	if (atomic_read(&finish) == 8)
 	{
 		printf ("%d\n",atomic_read(&count));
