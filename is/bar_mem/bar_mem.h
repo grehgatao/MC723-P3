@@ -101,10 +101,10 @@ public:
     cout << "Transport WRITE at 0x" << hex << request.addr << " value ";
     cout << request.data << endl;
       #endif
-      while(write_lock);
-      write_lock = true;
+      //while(write_lock);
+      //write_lock = true;
       DM_port.write(&aux_req.data, request.addr, 32);
-      write_lock = false;
+      //write_lock = false;
       response.status = SUCCESS;
       break;
     default :

@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include "atomic.h"
 
-#define MAX_VALUE 500
+#define MAX_VALUE 100000
 #define MULT_PROC
 
 atomic_t finish = {0};
 atomic_t proc = {0};
 atomic_t * input;
 atomic_t * count;
-volatile int mutex = 0, n = 0, loaded = 0;
+volatile int n = 0, loaded = 0;
 
 void atomic_countingsort(atomic_t * input, int start, int end)
 {
@@ -54,6 +54,7 @@ int main(int argc, char *argv[]){
 	#ifndef MULT_PROC
 	if (proc_num == 1)
 	{
+		printf("Single Proc\n");
 		atomic_countingsort(input, 0, n-1);
 	}
 
@@ -64,6 +65,7 @@ int main(int argc, char *argv[]){
 	}
 	else
 	{
+		printf("Multi Proc\n");
 		atomic_countingsort(input, (proc_num-1)*tmp, n-1);
 	}
 	#endif
@@ -78,7 +80,7 @@ int main(int argc, char *argv[]){
 			while (atomic_read(&count[i]))
 			{
 				atomic_set(&input[tmp++], i);
-				printf ("%d\n", i);
+				//printf ("%d\n", i);
 				atomic_dec(&count[i]);
 			}
 		}
