@@ -23,6 +23,7 @@ const char *archc_options="-abi -dy ";
 #include  "mips1.H"
 #include  "ac_tlm_mem.h"
 #include  "bar_mem.h"
+#include "hardware_pow.h"
 
 using user::ac_tlm_mem;
 
@@ -39,8 +40,11 @@ int sc_main(int ac, char *av[])
   mips1 mips1_proc7("mips7");
   mips1 mips1_proc8("mips8");
   ac_tlm_mem mem("mem");
+  user::hardware_pow hdp("hardware_pow1");
   user::bar_mem bar("bar_mem1");
+  
   bar.DM_port(mem.target_export);
+  bar.HDP_port(hdp.target_export);
 
 #ifdef AC_DEBUG
   ac_trace("mips1_proc1.trace");
@@ -100,7 +104,14 @@ int sc_main(int ac, char *av[])
 
 #ifdef AC_DEBUG
   ac_close_trace();
-#endif 
-
-  return mips1_proc1.ac_exit_status;
+#endif
+  return 0;
+  /*return (mips1_proc1.ac_exit_status | 
+          mips1_proc2.ac_exit_status |
+          mips1_proc3.ac_exit_status |
+          mips1_proc4.ac_exit_status |
+          mips1_proc5.ac_exit_status |
+          mips1_proc6.ac_exit_status |
+          mips1_proc7.ac_exit_status |
+          mips1_proc8.ac_exit_status);*/
 }

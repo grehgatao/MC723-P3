@@ -34,40 +34,58 @@
 // SystemC includes
 // ArchC includes
 
-#include "bar_mem.h"
+#include "hardware_pow.h"
 #include  "ac_tlm_port.H"
 #include  "ac_memport.H"
+
+#define CHANGE_ENDIAN(value) (0x00000000 | (value << 24) | ((value << 8) & 0x00FF0000) | ((value >> 8) & 0x0000FF00) | (value >> 24))
 
 //////////////////////////////////////////////////////////////////////////////
 
 /// Namespace to isolate memory from ArchC
-using user::bar_mem;
+using user::hardware_pow;
 
 /// Constructor
-bar_mem::bar_mem( sc_module_name module_name) :
-DM_port("DM_port", 5242880U),
-HDP_port("HDP_port", HARDWARE_POW_ADDR_BASE),
-target_export1("iport1"),
-target_export2("iport2"),
-target_export3("iport3"),
-target_export4("iport4"),
-target_export5("iport5"),
-target_export6("iport6"),
-target_export7("iport7"),
-target_export8("iport8")
+hardware_pow::hardware_pow( sc_module_name module_name) :
+target_export("iport")
 {
   /// Binds target_export to the memory
-  target_export1( *this );
-  target_export2( *this );
-  target_export3( *this );
-  target_export4( *this );
-  target_export5( *this );
-  target_export6( *this );
-  target_export7( *this );
-  target_export8( *this );
-  write_lock = false;
+  target_export( *this );
 }
 
 /// Destructor
-bar_mem::~bar_mem() {
+hardware_pow::~hardware_pow() {
+}
+
+ac_tlm_rsp_status hardware_pow::write_base( const uint32_t &a )
+{
+  base = CHANGE_ENDIAN(*((uint32_t *) &a));
+  return SUCCESS;
+}
+
+ac_tlm_rsp_status hardware_pow::write_exponent( const uint32_t &a )
+{
+  exponent = CHANGE_ENDIAN(*((uint32_t *) &a));
+  return SUCCESS;
+}
+
+ac_tlm_rsp_status hardware_pow::read_result( uint32_t &a )
+{
+  *((uint32_t *) &a) = CHANGE_ENDIAN(ipow(base, exponent));
+  return SUCCESS;
+}
+
+int hardware_pow::ipow(int base, int exp)
+{
+  int result = 1;
+
+  while (exp)
+  {
+      if (exp & 1)
+          result *= base;
+      exp >>= 1;
+      base *= base;
+  }
+
+  return result;
 }

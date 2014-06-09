@@ -30,8 +30,12 @@
  */
 
 //////////////////////////////////////////////////////////////////////////////
-#ifndef BAR_MEM_H_
-#define BAR_MEM_H_
+#ifndef HARDWARE_POW_H_
+#define HARDWARE_POW_H_
+
+#define HARDWARE_POW_ADDR_BASE 5242884U
+#define HARDWARE_POW_ADDR_EXPONENT 5242888U
+#define HARDWARE_POW_ADDR_RESULT 5242892U
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -42,10 +46,6 @@
 #include "ac_tlm_protocol.H"
 #include  "ac_tlm_port.H"
 #include  "ac_memport.H"
-
-#define HARDWARE_POW_ADDR_BASE 5242884U
-#define HARDWARE_POW_ADDR_EXPONENT 5242888U
-#define HARDWARE_POW_ADDR_RESULT 5242892U
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -61,24 +61,21 @@ namespace user
 {
 
 /// A TLM memory
-class bar_mem :
+class hardware_pow :
   public sc_module,
   public ac_tlm_transport_if // Using ArchC TLM protocol
 {
 private:
-  volatile bool write_lock;
+  int exponent;
+  int base;
+  int ipow(int base, int exp);
 public:
   /// Exposed port with ArchC interface
-  sc_export< ac_tlm_transport_if > target_export1;
-  sc_export< ac_tlm_transport_if > target_export2;
-  sc_export< ac_tlm_transport_if > target_export3;
-  sc_export< ac_tlm_transport_if > target_export4;
-  sc_export< ac_tlm_transport_if > target_export5;
-  sc_export< ac_tlm_transport_if > target_export6;
-  sc_export< ac_tlm_transport_if > target_export7;
-  sc_export< ac_tlm_transport_if > target_export8;
-  ac_tlm_port DM_port;
-  ac_tlm_port HDP_port;
+  sc_export< ac_tlm_transport_if > target_export;
+
+  ac_tlm_rsp_status write_base(const uint32_t & );
+  ac_tlm_rsp_status write_exponent(const uint32_t & );
+  ac_tlm_rsp_status read_result(uint32_t & );
 
   /**
    * Implementation of TLM transport method that
@@ -88,10 +85,37 @@ public:
    * @return A response packet to be send
   */
   ac_tlm_rsp transport( const ac_tlm_req &request ) {
-    if (request.addr >= HARDWARE_POW_ADDR_BASE && request.addr <= HARDWARE_POW_ADDR_RESULT)
-      return HDP_port->transport(request);
-    else
-      return DM_port->transport(request);
+    ac_tlm_rsp response;
+
+    switch(request.addr)
+    {
+    case HARDWARE_POW_ADDR_BASE:
+      if (request.type == READ)
+        response.status = ERROR;
+      else if (request.type == WRITE)
+      {
+        response.status = write_base( request.data );
+      }
+      break;
+    case HARDWARE_POW_ADDR_EXPONENT:
+      if (request.type == READ)
+        response.status = ERROR;
+      else if (request.type == WRITE)
+      {
+        response.status = write_exponent( request.data );
+      }
+      break;
+    case HARDWARE_POW_ADDR_RESULT:
+      if (request.type == WRITE)
+        response.status = ERROR;
+      else if (request.type == READ)
+      {
+        response.status = read_result( response.data );
+      }
+      break;
+    }
+
+    return response;
   }
 
 
@@ -101,15 +125,15 @@ public:
    * @param k Memory size in kilowords.
    *
    */
-  bar_mem( sc_module_name module_name);
+  hardware_pow( sc_module_name module_name);
 
   /**
    * Default destructor.
    */
-  ~bar_mem();
+  ~hardware_pow();
 
 };
 
 };
 
-#endif //AC_TLM_MEM_H_
+#endif
