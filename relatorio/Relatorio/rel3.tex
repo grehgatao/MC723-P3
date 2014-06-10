@@ -1,0 +1,291 @@
+\documentclass[10pt,a4paper]{report}
+\usepackage[hmargin=2cm,vmargin=3.5cm,bmargin=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[portuguese]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{makeidx}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{indentfirst}
+\usepackage[pdftex]{hyperref}
+\usepackage{csvsimple}
+\usepackage{color}
+\usepackage{mathtools}
+\usepackage{float}
+
+% Headers and Footers
+\usepackage{fancyhdr}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\cfoot{\textbf{\thepage}} % central footer
+
+% Code
+\lstset{ %
+  backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}
+  basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+  breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+  breaklines=true,                 % sets automatic line breaking
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygreen},    % comment style
+  deletekeywords={...},            % if you want to delete keywords from the given language
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+  frame=single,                    % adds a frame around the code
+  keywordstyle=\color{blue},       % keyword style
+%  language=Octave,                 % the language of the code
+  morekeywords={*,...},            % if you want to add more keywords to the set
+  numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+  numbersep=5pt,                   % how far the line-numbers are from the code
+  numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+  rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+  showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+  showstringspaces=false,          % underline spaces within strings only
+  showtabs=false,                  % show tabs within strings adding particular underscores
+  stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+  stringstyle=\color{mymauve},     % string literal style
+  tabsize=2,                       % sets default tabsize to 2 spaces
+  title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+\begin{document}
+
+% generates the title
+%\maketitle
+
+% insert the table of contents
+%\tableofcontents
+
+\begin{center}
+\textbf{\huge Projeto 3 - Sistemas Multicore e Offload para Hardware}
+\newline
+\newline
+\end{center}
+
+
+\begin{flushright}
+\large
+André Nakagaki Filliettaz - RA104595
+
+Gregori Yuji Mandelli Inagaki 105006
+
+Lucas Noriyuki Yabuta 106120
+\end{flushright}
+
+\begin{Large}
+\textbf{Introdução}
+\newline
+\end{Large}
+
+    O desempenho na execução de tarefas tem sido uma das preocupações da computação desde o seu início. Hoje em dia, todas as máquinas modernas possuem microprocessadores, com altos níveis de desempenho e hardwares moderníssimos.
+    
+    Quando a técnologia utilizada para desenvolver microprocessadores começou a esbarrar nos limites físicos (microprocessadores estavam alcançando temperaturas elevadas demais para serem comercialmente viáveis), visando o aumento de performance, surgiu o que se denomina multiprocessador!
+    
+    Os multiprocessadores nada mais são do que chips que contém mais do que um core (núcleo de processamento). Individualmente, esses núcleos tendem a ter um desempenho inferior aos tradicionais microprocessadores, mas sua grande vantagem advém do processamento paralelo!
+    
+    Para este projeto, foi proposto a modelagem de um sistema com até oito cores, que executariam um software que tiraria proveito de todo o paralelismo nele. Além disso, um módulo em hardware, especializado em executar algum trecho de software, deveria ser desenvolvido (software offloading). Com isso deve-se observar e medir o impacto que o processamento paralelo e software offloading tem sobre o desempenho do processador na execução do programa.
+\newline
+\newline
+
+\begin{Large}
+\textbf{Objetivos}
+\newline
+\end{Large}
+
+    Buscou-se medir o aumento de desempenho que cada core, juntamente com o módulo de software offloading,trazia para os tempos de execução finais do processador. Para isso, para realizar os testes, foi utilizado um programa que implementava a fórmula de Bailey–Borwein–Plouffe (Algoritmo de BBP).
+    
+    Com o uso desse algoritmo simples, foi possível obter-se uma quantidade muito boa de resultados.
+\newline
+\newline
+
+\begin{Large}
+\textbf{Metodologia}
+\newline
+\end{Large}
+
+    Para obtenção de dados, foram executados diversos testes com o uso de scripts personalisados, que tinham por finalidade automatizar os testes e gerar arquivos de log, que foram analisados depois da execução do programa.
+    
+    Na primeira etapa de testes, um sistema com processador único e sem nenhuma unidade de software offloading executou o programa 20 vezes, para que com isso, fosse feito um levantamento de dados de tempo de execução e performance. Esses dados da primeira fase são os dados que servem de base para que os efeitos dos multiplos processadores e da unidade de software offloading fossem computados, de forma a medir e determinar seu impacto.
+    
+    O dado coletado aqui foi o comando \textit{time} do linux, para medir o tempo total gasto pelo sistema para executar, não o tempo utilizado por cada core.
+    
+        Após está etapa, uma segunda coleta de medidas foi feita. Desta vez utilizando-se quatro cores e o módulo de offloading. Novamente, foram feitas 20 execuções do programa de teste e retiradas medidas de tempo com o comando \textbf{time} do linux.
+    
+    Por fim, uma ultima etapa de testes foi feita, agora com todos os oito cores ativos e o sistema de offloading. Nesse caso tirou-se proveito ao máximo do processamento paralelo do sistema. Novamente o programa foi executado 20 vezes, com suas medidas sendo obtidas com o auxílio do comando \textbf{time}.
+    
+    
+
+\begin{Large}
+\textbf{Atribuição de Notas}
+\newline
+\end{Large}
+
+O benchmark realiza a atribuição das notas de cada um dos Computadores baseado no componente que está sendo posto sob teste e sua importância, de forma a utilizar os seguintes pesos: \textbf{Blender} (10\%), \textbf{DF} (10\%), \textbf{dd} (30\%), \textbf{Mandelbulber} (35\%), \textbf{Minerador} (15\%).
+
+Todos os componentes tem sua importância no sistema computacional, entretanto para aplicações diferentes, alguns componentes podem possuir importância chave para a execução da aplicação.
+A escolha dos pesos de cada um dos testes tem como base o hardware que está sendo avaliado no teste bem como seu uso no ambiente de execução de jogos de computadores.
+
+Tendo isso em mente, foram atribuidos os maiores pesos aos testes que avaliavam a performance da GPU e da transferência de dados.
+
+Nos dias de hoje, cada vez mais os jogos possuem gráficos poderosos e complexos, de forma que a presença de uma GPU dedicada, ou seja, que possui sua propria RAM dedicada ao uso da GPU é quase que obrigatória. Além disso, computadores que utilizam GPU integrada apresentam dificuldade no processamento e na execução do jogo em si, pois a RAM do sistema também é compartilhada entre GPU e CPU.
+
+Quanto ao teste de transferência, o comando \textbf{\textit{dd}} do linux fornece os tempos que o sistema leva para transferir uma determinada quantidade de dados no disco. Em um ambiente de jogos, nenhum usuário gosta de passar pela experiência de longos tempos de espera para que o computador carregue os dados.
+
+Por fim, os testes de Blender e DF, ou seja, os testes de CPU. Como foi argumentado, ter uma CPU poderosa somente não torna o computador próprio para jogos. O teste no Blender mede o tempo que a CPU gasta para renderizar uma cena. Apesar de ser um teste interessante, hoje em dia as renderizações são todas realizadas pelas GPUs, não mais pelas CPUs.
+
+Pode-se afirmar que a performance dos jogos está muito atrelada a GPU, de forma que esta tem participação mais importante que uma CPU poderosa no Benchmark.
+
+Utilizamos um baseline para a atribuição de notas. Como todos os valores dos testes 1 a 4 são do tipo ``menor é melhor'' e o valor do teste 5 é o contrário, a nota final de cada componente é dada por:
+
+$NF = \sum\limits_{i=1}^4 \frac{N_i - B_i}{B_i} * P_i + \frac{B_5 - N_5}{B_5} * P_5$
+
+em que $N_i$ é o valor do sistema para o i-ésimo teste, $B_i$ é o valor do benchmark e $P_i$ é o peso do teste.\\
+
+Com isso, atribuimos uma nota final a cada sistema, e rankeamos os sistemas em ordem crescente.\\
+
+\textbf{Baselines:} Blender (31.538s), DF (27.5058s), dd (14.08s), Mandelbulber (77s), minerador (386.1MH)
+\newline
+\newline
+
+\begin{Large}
+\textbf{Resultados}
+\newline
+\end{Large}
+
+As médias dos resultados de 5 testes em cada um dos computadores é apresentado na Tabela 1, a seguir:
+
+\begin{samepage}
+\begin{table}[H]\small
+\caption{Resultados dos testes do Benchmark}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline 
+Computador & Blender (s) & DF Real (s) & Comando dd (s) & Mandelbulber (s) & Minerador Bitcoin (MHashps)\\ 
+\hline
+1 & 32.910 & 30.9378 & 23.82728 & 322.2 & 22.8 \\
+\hline
+2 & 40.298 & 34.2800 & 14.28430 & 119.2 & 74.9 \\
+\hline
+3 & 31.538 & 27.5058 & 14.08056 & 77.0 & 386.1 \\
+\hline
+4 & 32.484 & 30.254 & 20.2761 & 122.5 & 132.8 \\
+\hline
+5 & 29.775 & 27.9840 & 26.50000 & 284 & 36 \\
+\hline
+\end{tabular} 
+\end{center}
+\end{table}
+\end{samepage}
+
+A seguir, as especificações de cada um dos computadores que foram testados pelo benchmark em questão:\\ \\
+
+\textbf{Computador 1:}
+
+\begin{itemize}
+\item \textbf{CPU:} Intel i5-2410M 2.3GHz
+\item \textbf{GPU:} Nvidia Geforce GT 555M
+\item \textbf{Memória:} Generic 4Gb DDR2 667MHz
+\item \textbf{Disco:} Samsung ST750LM022 HN-M750MBB 5400RPM
+\\ \\
+\end{itemize}
+
+\textbf{Computador 2:}
+
+\begin{itemize}
+\item \textbf{CPU:} Intel Core2Quad Q9550
+\item \textbf{GPU:} NVIDIA GeForce GTX560
+\item \textbf{Memória:} Kingston 2x4GB DDR2 533MHz
+\item \textbf{Disco:} Samsung Spinpoint F1 HD322HJ 320GB 7200RPM
+\\ \\
+\end{itemize}
+
+\textbf{Computador 3:}
+
+\begin{itemize}
+\item \textbf{CPU:} AMD FX 6300 AM3+ 3.5GHz
+\item \textbf{GPU:} Sapphire ATI Radeon HD 7870
+\item \textbf{Memória:} Corsair 4Gb  DDR3 1333MHz
+\item \textbf{Disco:} Western Digital WD5000AAKX 7200RPM BLUE
+\\ \\
+\end{itemize}
+
+\textbf{Computador 4:}
+
+\begin{itemize}
+\item \textbf{CPU:} Intel Core i5 2430M @ 2.40GHz
+\item \textbf{GPU:} ATI AMD Radeon HD 7450M 1024MB
+\item \textbf{Memória:} 1x4GB DDR3 @ 655MHz
+\item \textbf{Disco:} Western Digital WDC WD7500BPVT 698GB
+\\ \\
+\end{itemize}
+
+\textbf{Computador 5:}
+
+\begin{itemize}
+\item \textbf{CPU:} Intel Core i7 2630QM @ 2.8GHz
+\item \textbf{GPU:} NVIDIA GeForce GT 540M 1GB
+\item \textbf{Memória:} 1x4GB DDR3 1333MHz
+\item \textbf{Disco:} 7200RPM 320GB HD
+\\ \\
+\end{itemize}
+
+\begin{Large}
+\textbf{Códigos Auxiliares}
+\newline
+\end{Large}
+
+O Shell Script a seguir foi utilizado para gerar o mapa no DwarfFortress:\\
+
+\begin{lstlisting}[language=sh]
+#!/bin/sh
+B_DIR=$(dirname $0)
+rm -rf ./data/save
+rm -rf ./region1*
+rm -rf ./world*
+time ./df -gen 1 RANDOM GOLDEN
+\end{lstlisting}
+
+Com o uso do comando time, era possível obter o tempo transcorrido para que o programa gerasse o mundo.
+\newline
+\newline
+
+\begin{Large}
+\textbf{Conclusão}
+\newline
+\end{Large}
+
+Utilizando o método proposto para rankear os sistemas, obtemos o seguinte ranking:
+
+\begin{samepage}
+\begin{table}[H]\small
+\caption{Ranking dos computadores}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+\hline 
+Computador & Nota Blender & Nota DF & Nota Comando dd & Nota Mandelbulber & Nota Minerador Bitcoin & Nota Final\\ 
+\hline
+1 & 0.0417 & 0.1248 & 0.6923 & 3.1844 & 0.9409 & 4.9841\\
+\hline
+2 & 0.2778 & 0.2463 & 0.0145 & 0.5481 & 0.8060 & 1.8927\\
+\hline
+3 & 0 & 0 & 0 & 0 & 0 & 0\\
+\hline
+4 & 0.03 & 0.0999 & 0.4401 & 0.5909 & 0.6560 & 1.8169\\
+\hline
+5 & -0.0559 & 0.0174 & 0.8821 & 2.6883 & 0.9068 & 4.4392\\
+\hline
+\end{tabular} 
+\end{center}
+\end{table}
+\end{samepage}
+
+E concluimos que, em ordem de melhor para pior computador para jogos, temos: 3, 4, 2, 5, 1.\\
+
+Ao testar os computadores analisados em jogos que utilizam todos os recursos citados nesse benchmark, percebemos que os resultados do nosso benchmark coincidem um pouco com a realidade. O teste de mineração de Bitcoin é um teste difícil, pois a performance de placas da AMD e placas da NVIDIA na mineração é muito diferente. No entanto, para jogos, a performance das placas geralmente não respeita a mesma performance da mineração.
+
+\end{document}
