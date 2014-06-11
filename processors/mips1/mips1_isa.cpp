@@ -43,6 +43,9 @@
 //#define DEBUG_MODEL
 #include "ac_debug_model.H"
 
+// Andre editou aqui!
+#include <fstream>
+
 
 //!User defined macros to reference registers.
 #define Ra 31
@@ -51,6 +54,10 @@
 // 'using namespace' statement to allow access to all
 // mips1-specific datatypes
 using namespace mips1_parms;
+
+// Andre editou aqui!
+using namespace std;
+
 
 //!Generic instruction behavior method.
 void ac_behavior( instruction )
@@ -71,6 +78,7 @@ void ac_behavior( Type_J ){}
 //!Behavior called before starting simulation
 void ac_behavior(begin)
 {
+  ofstream log_file("results.out", ios::app);
   dbg_printf("@@@ begin behavior @@@\n");
   RB[0] = 0;
   npc = ac_pc + 4;
@@ -85,7 +93,10 @@ void ac_behavior(begin)
 //!Behavior called after finishing simulation
 void ac_behavior(end)
 {
+  ofstream log_file("cicles.out", ios::app);
   dbg_printf("@@@ end behavior @@@\n");
+  log_file << ac_instr_counter+1 << endl;
+  log_file.close();
 }
 
 

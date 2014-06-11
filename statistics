@@ -1,0 +1,67 @@
+
+             SystemC 2.3.0-ASI --- Apr  3 2013 16:06:37
+        Copyright (c) 1996-2012 by all Contributors,
+        ALL RIGHTS RESERVED
+
+ArchC: Reading ELF application file: bpp_pi.x
+ArchC: -------------------- Starting Simulation --------------------
+ArchC: Reading ELF application file: bpp_pi.x
+ArchC: -------------------- Starting Simulation --------------------
+ArchC: Reading ELF application file: bpp_pi.x
+ArchC: -------------------- Starting Simulation --------------------
+ArchC: Reading ELF application file: bpp_pi.x
+ArchC: -------------------- Starting Simulation --------------------
+ArchC: Reading ELF application file: bpp_pi.x
+ArchC: -------------------- Starting Simulation --------------------
+ArchC: Reading ELF application file: bpp_pi.x
+ArchC: -------------------- Starting Simulation --------------------
+ArchC: Reading ELF application file: bpp_pi.x
+ArchC: -------------------- Starting Simulation --------------------
+ArchC: Reading ELF application file: bpp_pi.x
+ArchC: -------------------- Starting Simulation --------------------
+
+ArchC: -------------------- Simulation Finished --------------------
+ArchC: -------------------- Simulation Finished --------------------
+ArchC: -------------------- Simulation Finished --------------------
+ArchC: -------------------- Simulation Finished --------------------
+ArchC: -------------------- Simulation Finished --------------------
+ArchC: -------------------- Simulation Finished --------------------
+ArchC: -------------------- Simulation Finished --------------------
+ArchC Warning: This version of fstat should not be called!
+ArchC Warning: Please, recompile your target application with an updated libac_sysc.
+ArchC: -------------------- Simulation Finished --------------------
+
+Info: /OSCI/SystemC: Simulation stopped by user.
+ArchC: Simulation statistics
+    Times: 0.04 user, 0.00 system, 0.03 real
+    Number of instructions executed: 7108
+    Simulation speed: (too fast to be precise)
+ArchC: Simulation statistics
+    Times: 0.04 user, 0.00 system, 0.03 real
+    Number of instructions executed: 9572
+    Simulation speed: (too fast to be precise)
+ArchC: Simulation statistics
+    Times: 0.04 user, 0.00 system, 0.03 real
+    Number of instructions executed: 13284
+    Simulation speed: (too fast to be precise)
+ArchC: Simulation statistics
+    Times: 0.04 user, 0.00 system, 0.03 real
+    Number of instructions executed: 10503
+    Simulation speed: (too fast to be precise)
+ArchC: Simulation statistics
+    Times: 0.04 user, 0.00 system, 0.03 real
+    Number of instructions executed: 10563
+    Simulation speed: (too fast to be precise)
+ArchC: Simulation statistics
+    Times: 0.04 user, 0.00 system, 0.03 real
+    Number of instructions executed: 10542
+    Simulation speed: (too fast to be precise)
+ArchC: Simulation statistics
+    Times: 0.04 user, 0.00 system, 0.03 real
+    Number of instructions executed: 9804
+    Simulation speed: (too fast to be precise)
+ArchC: Simulation statistics
+    Times: 0.04 user, 0.00 system, 0.03 real
+    Number of instructions executed: 8601
+    Simulation speed: (too fast to be precise)
+
