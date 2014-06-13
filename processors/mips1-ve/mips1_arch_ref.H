@@ -22,9 +22,6 @@
 #include  "ac_reg.H"
 #include  "ac_regbank.H"
 
-//!Added by Andre N. Filliettaz 1s2014-p3
-#include  "pipeline_model.h"
-
 //!Forward class declaration, needed to compile.
 class mips1_arch;
 
@@ -42,13 +39,10 @@ public:
   ac_reg<mips1_parms::ac_word>& hi;
   ac_reg<mips1_parms::ac_word>& lo;
 
-  //Registradores para execução de LL e SC
+    //Registradores para execução de LL e SC
   ac_reg<mips1_parms::ac_word>& LL;
   ac_reg<mips1_parms::ac_word>& LLAddr;
   ac_reg<mips1_parms::ac_word>& oldLL;
-
-  //!Added by Andre N. Filliettaz 1s2014-p3
-  PipelineModel *pipeline;
 
   //!Constructor.
    mips1_arch_ref(mips1_arch& arch);

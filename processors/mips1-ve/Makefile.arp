@@ -2,10 +2,10 @@
 # MIPS1 Simulator
 # ####################################################
 
-TARGET=mips1
+TARGET=mips1-archc2x-branch
 INC_DIR := -I. -I$(ARCHC_PATH)/include/archc -I$(SYSTEMC)/include -I$(TLM_PATH)
 
-SRCS := mips1.cpp  mips1_arch.cpp  mips1_arch_ref.cpp  mips1_isa.cpp mips1_syscall.cpp pipeline_model.cpp
+SRCS := mips1.cpp  mips1_arch.cpp  mips1_arch_ref.cpp  mips1_isa.cpp mips1_syscall.cpp
 OBJS := $(SRCS:.cpp=.o)
 
 #------------------------------------------------------
@@ -32,5 +32,5 @@ distclean: clean
 #------------------------------------------------------
 mips1.cpp:
 	echo --- No simulator found, using acsim to generate one.
-	$(ARCHC_PATH)/bin/acsim mips1.ac -abi
+	$(ARCHC_PATH)/bin/acsim mips1.ac -abi -dy
 	$(MAKE) all

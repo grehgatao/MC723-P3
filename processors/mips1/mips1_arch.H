@@ -23,6 +23,9 @@
 #include  "ac_regbank.H"
 #include  "ac_reg.H"
 #include  "ac_tlm_port.H"
+
+//!Added by Andre N. Filliettaz 1s2014-p3
+#include  "pipeline_model.h"
  
 //!ArchC class for model-specific architectural resources.
 
@@ -44,6 +47,9 @@ public:
   ac_reg<mips1_parms::ac_word> LL;
   ac_reg<mips1_parms::ac_word> LLAddr;
   ac_reg<mips1_parms::ac_word> oldLL;
+
+  //!Added by Andre N. Filliettaz 1s2014-p3
+  PipelineModel *pipeline;
  
 
   //!Constructor.

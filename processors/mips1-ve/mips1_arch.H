@@ -13,46 +13,51 @@
  ******************************************************/
  
 
-#ifndef  _MIPS1_ARCH_REF_H
-#define  _MIPS1_ARCH_REF_H
+#ifndef  MIPS1_ARCH_H
+#define  MIPS1_ARCH_H
 
 #include  "mips1_parms.H"
-#include  "ac_arch_ref.H"
+#include  "ac_arch_dec_if.H"
+#include  "ac_storage.H"
 #include  "ac_memport.H"
-#include  "ac_reg.H"
 #include  "ac_regbank.H"
-
-//!Added by Andre N. Filliettaz 1s2014-p3
-#include  "pipeline_model.h"
-
-//!Forward class declaration, needed to compile.
-class mips1_arch;
-
+#include  "ac_reg.H"
+#include  "ac_tlm_port.H"
+ 
 //!ArchC class for model-specific architectural resources.
-class mips1_arch_ref : public ac_arch_ref<mips1_parms::ac_word, mips1_parms::ac_Hword> {
+
+class mips1_arch : public ac_arch_dec_if<mips1_parms::ac_word, mips1_parms::ac_Hword> {
 public:
  
   //!Program Counter.
-  ac_reg<unsigned>& ac_pc;
+  ac_reg<unsigned> ac_pc;
 
   //!Storage Devices.
-  ac_memport<mips1_parms::ac_word, mips1_parms::ac_Hword>& DM;
-  ac_regbank<32, mips1_parms::ac_word, mips1_parms::ac_Dword>& RB;
-  ac_reg<mips1_parms::ac_word>& npc;
-  ac_reg<mips1_parms::ac_word>& hi;
-  ac_reg<mips1_parms::ac_word>& lo;
+  ac_tlm_port DM_port;
+  ac_memport<mips1_parms::ac_word, mips1_parms::ac_Hword> DM;
+  ac_regbank<32, mips1_parms::ac_word, mips1_parms::ac_Dword> RB;
+  ac_reg<mips1_parms::ac_word> npc;
+  ac_reg<mips1_parms::ac_word> hi;
+  ac_reg<mips1_parms::ac_word> lo;
 
   //Registradores para execução de LL e SC
-  ac_reg<mips1_parms::ac_word>& LL;
-  ac_reg<mips1_parms::ac_word>& LLAddr;
-  ac_reg<mips1_parms::ac_word>& oldLL;
-
-  //!Added by Andre N. Filliettaz 1s2014-p3
-  PipelineModel *pipeline;
+  ac_reg<mips1_parms::ac_word> LL;
+  ac_reg<mips1_parms::ac_word> LLAddr;
+  ac_reg<mips1_parms::ac_word> oldLL;
+ 
 
   //!Constructor.
-   mips1_arch_ref(mips1_arch& arch);
+  explicit mips1_arch();
+
+  //!Module initialization method.
+  virtual void init(int ac, char* av[]) = 0;
+
+  //!Module finalization method.
+  virtual void stop(int status = 0) = 0;
+
+  //!Virtual destructor declaration.
+  virtual ~mips1_arch() {};
 
 };
 
-#endif  //_MIPS1_ARCH_REF_H
+#endif  //_MIPS1_ARCH_H

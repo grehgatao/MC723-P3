@@ -5,7 +5,7 @@
 TARGET=mips1
 INC_DIR := -I. -I$(ARCHC_PATH)/include/archc -I$(SYSTEMC)/include -I$(TLM_PATH)
 
-SRCS := mips1.cpp  mips1_arch.cpp  mips1_arch_ref.cpp  mips1_isa.cpp mips1_syscall.cpp pipeline_model.cpp
+SRCS := mips1.cpp  mips1_arch.cpp  mips1_arch_ref.cpp  mips1_isa.cpp mips1_syscall.cpp
 OBJS := $(SRCS:.cpp=.o)
 
 #------------------------------------------------------
